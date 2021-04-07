@@ -34,7 +34,7 @@ public abstract class Item {
     public abstract void onDealDamage(EntityDamageByEntityEvent event, GamePlayer gp, boolean wasMe);
     public abstract void onProjectileLaunch(ProjectileLaunchEvent event, GamePlayer gp, boolean wasMe);
     public abstract void onProjectileHit(ProjectileHitEvent event, GamePlayer gp, boolean wasMe);
-    public abstract void onDropAttempt(GamePlayer gp); // may be called through drop, or through ability press (bound to keys 1,2,3,7,8,9)
+    public abstract void onAbilityCall(GamePlayer gp); // may be called through drop, or through ability press (bound to keys 1,2,3,4,7,8,9)
     public abstract void update(GamePlayer gp);
 
     public enum ItemSlot {
@@ -43,6 +43,7 @@ public abstract class Item {
         HELMET,
         CHESTPLATE,
         LEGGINGS,
-        BOOTS
+        BOOTS,
+        KNICKKNACK // rings, amulets, necklaces, etc
     }
 }

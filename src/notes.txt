@@ -34,3 +34,6 @@ Selectable variable for secondaries
 
 ########## Armor ##########
 Mostly passive, can have abilities and passives
+
+################ Game Player ##################
+Main player class for plugin specific stuff
