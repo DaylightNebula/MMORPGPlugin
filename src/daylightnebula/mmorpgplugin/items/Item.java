@@ -1,11 +1,15 @@
 package daylightnebula.mmorpgplugin.items;
 
+import daylightnebula.mmorpgplugin.Essentials;
 import daylightnebula.mmorpgplugin.GamePlayer;
+import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +32,9 @@ public abstract class Item {
     public abstract ItemStack getCurrentIcon();
     public ItemSlot getRequiredSlot() { return requiredSlot; }
     public HashMap getAttributeMap() { return attributeMap; }
+
+    // required data
+    public abstract byte[] getDefaultData();
 
     // events
     public abstract void onEquip(GamePlayer gp);
@@ -57,5 +64,12 @@ public abstract class Item {
             if (item.name.equals(name))
                 return item;
         return null;
+    }
+
+    public static ItemStack getOutputItemWithData(Item item) {
+        ItemStack itemStack = item.defaultIcon.clone();
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.getPersistentDataContainer().set(Essentials.key, PersistentDataType.BYTE_ARRAY, item.getDefaultData());
+        itemStack.setItemMeta(meta);
     }
 }

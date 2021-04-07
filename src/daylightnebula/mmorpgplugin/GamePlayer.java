@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GamePlayer {
+
     public LivingEntity le;
     public HashMap<ItemAttribute, Integer> currentAttributes;
 
@@ -25,7 +26,9 @@ public class GamePlayer {
     public static ArrayList<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
 
     public static void addLivingEntity(LivingEntity le) {
-        gamePlayers.add(new GamePlayer(le, new HashMap<>()));
+        GamePlayer gp = new GamePlayer(le, new HashMap<>());
+        gamePlayers.add(gp);
+        updateAttributes(gp);
     }
 
     public static void updateAttributes(GamePlayer player) {
@@ -34,13 +37,25 @@ public class GamePlayer {
 
         // check if player
         if (player.isPlayer()) {
-            // for each active item slot TODO: Get list of active item slots
-            // use addAttributesFromItem to update the attributes
+            // get player
+            Player p = (Player) player.le;
+
+            // for all equipment slots, add attributes
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getHelmet().getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getChestplate().getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getLeggings().getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getBoots().getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getItem(9).getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getItem(10).getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getItem(11).getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getItem(12).getItemMeta().getDisplayName()).getAttributeMap());
+            addAttributesFromItem(player.currentAttributes, Item.getItemByName(p.getInventory().getItem(13).getItemMeta().getDisplayName()).getAttributeMap());
         } else {
             // is a living entity
             LivingEntity le = player.le;
 
-            // for all the equipment slots
+            // for all the equipment slots, add attributes
             addAttributesFromItem(player.currentAttributes, Item.getItemByName(le.getEquipment().getItemInMainHand().getItemMeta().getDisplayName()).getAttributeMap());
             addAttributesFromItem(player.currentAttributes, Item.getItemByName(le.getEquipment().getChestplate().getItemMeta().getDisplayName()).getAttributeMap());
             addAttributesFromItem(player.currentAttributes, Item.getItemByName(le.getEquipment().getHelmet().getItemMeta().getDisplayName()).getAttributeMap());
