@@ -1,0 +1,33 @@
+########## Items ##########
+All weapons should have an ability, some armors can have one as well.
+
+Primary Attribute (5 total)
+ - Speed = Movement speed
+ - Armor = Damage reduction
+ - Intelligence = Mana and scaling for mages
+ - Agility = Scaling for rogues
+ - Strength = Scaling for knights, paladins, etc
+
+Secondary Attribute
+ - Life Steal = Heal a percentage of damage dealt
+ - Haste = Attack speed
+
+Needs
+ - Method of changing icon on hotbar
+ - Basic Attributes (update on join and inventory change)
+ - Core database per player
+
+Events
+ - OnEquip (also can be held)
+ - OnUnequip (also when stop holding)
+ - Deal Damage (with is held var)
+ - Take Damage (called after armor calculation and other attributes)
+ - Launch Projectile (with held var)
+ - Ability Call (when q pressed, not dragged from inventory)
+ - Tick Update
+
+########## Weapons ########
+Should scale off stats from other abilities and armor
+
+########## Armor ##########
+Mostly passive, can have abilities and passives
