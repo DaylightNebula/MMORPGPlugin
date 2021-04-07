@@ -12,11 +12,13 @@ import java.util.Map;
 
 public abstract class Item {
 
+    public String name; // display name, this cannot change as it is used for id
     ItemStack defaultIcon;
     ItemSlot requiredSlot;
     HashMap attributeMap;
 
-    public Item(ItemStack defaultIcon, ItemSlot requiredSlot, HashMap attributeMap) {
+    public Item(String name, ItemStack defaultIcon, ItemSlot requiredSlot, HashMap attributeMap) {
+        this.name = name;
         this.defaultIcon = defaultIcon;
         this.requiredSlot = requiredSlot;
         this.attributeMap = attributeMap;
@@ -45,5 +47,15 @@ public abstract class Item {
         LEGGINGS,
         BOOTS,
         KNICKKNACK // rings, amulets, necklaces, etc
+    }
+
+    // STATIC
+    public static Item[] items = new Item[]{};
+
+    public static Item getItemByName(String name) {
+        for (Item item : items)
+            if (item.name.equals(name))
+                return item;
+        return null;
     }
 }
