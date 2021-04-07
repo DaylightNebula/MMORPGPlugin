@@ -1,5 +1,6 @@
 ########## Items ##########
 All weapons should have an ability, some armors can have one as well.
+All items should have an allowed slot
 
 Primary Attribute (5 total)
  - Speed = Movement speed
@@ -23,11 +24,13 @@ Events
  - Deal Damage (with is held var)
  - Take Damage (called after armor calculation and other attributes)
  - Launch Projectile (with held var)
+ - Projectile Hit (with held var)
  - Ability Call (when q pressed, not dragged from inventory)
  - Tick Update
 
 ########## Weapons ########
 Should scale off stats from other abilities and armor
+Selectable variable for secondaries
 
 ########## Armor ##########
 Mostly passive, can have abilities and passives
