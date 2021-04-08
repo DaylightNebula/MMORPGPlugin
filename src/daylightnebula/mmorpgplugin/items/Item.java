@@ -2,11 +2,14 @@ package daylightnebula.mmorpgplugin.items;
 
 import daylightnebula.mmorpgplugin.Essentials;
 import daylightnebula.mmorpgplugin.GamePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -21,17 +24,17 @@ public abstract class Item {
     ItemSlot requiredSlot;
     HashMap attributeMap;
 
-    public Item(String name, ItemStack defaultIcon, ItemSlot requiredSlot, HashMap attributeMap) {
+    public Item(String name) {
         this.name = name;
-        this.defaultIcon = defaultIcon;
-        this.requiredSlot = requiredSlot;
-        this.attributeMap = attributeMap;
+        this.defaultIcon = getCurrentIcon();
+        this.requiredSlot = getRequiredSlot();
+        this.attributeMap = getAttributeMap();
     }
 
     // getters
     public abstract ItemStack getCurrentIcon();
-    public ItemSlot getRequiredSlot() { return requiredSlot; }
-    public HashMap getAttributeMap() { return attributeMap; }
+    public abstract ItemSlot getRequiredSlot();
+    public abstract HashMap getAttributeMap();
 
     // required data
     public abstract byte[] getDefaultData();
@@ -39,6 +42,7 @@ public abstract class Item {
     // events
     public abstract void onEquip(GamePlayer gp);
     public abstract void onUnequip(GamePlayer gp);
+    public abstract void onItemInteract(PlayerInteractEvent event, GamePlayer player);
     public abstract void onTakeDamage(EntityDamageByEntityEvent event, GamePlayer gp);
     public abstract void onDealDamage(EntityDamageByEntityEvent event, GamePlayer gp, boolean wasMe);
     public abstract void onProjectileLaunch(ProjectileLaunchEvent event, GamePlayer gp, boolean wasMe);
@@ -69,7 +73,24 @@ public abstract class Item {
     public static ItemStack getOutputItemWithData(Item item) {
         ItemStack itemStack = item.defaultIcon.clone();
         ItemMeta meta = itemStack.getItemMeta();
-        meta.getPersistentDataContainer().set(Essentials.key, PersistentDataType.BYTE_ARRAY, item.getDefaultData());
+        meta.getPersistentDataContainer().set(
+                Essentials.key,
+                PersistentDataType.BYTE_ARRAY,
+                item.getDefaultData());
         itemStack.setItemMeta(meta);
+        return itemStack;
+    }
+
+    private static Inventory adminInventory;
+    public static Inventory getAdminInventory() {
+        if (adminInventory == null) {
+            adminInventory = Bukkit.createInventory(null, 27, "Admin Only");
+
+            for (Item item : items) {
+                adminInventory.addItem(Item.getOutputItemWithData(item));
+            }
+        }
+
+        return adminInventory;
     }
 }
