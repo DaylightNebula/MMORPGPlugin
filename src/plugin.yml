@@ -1,5 +1,5 @@
-name: WarcrossPlugin
-main: daylightnebula.warcrossmcplugin.Main
+name: MMORPGPlugin
+main: daylightnebula.mmorpgplugin.Main
 version: 1.0
 api-version: 1.16
 commands:

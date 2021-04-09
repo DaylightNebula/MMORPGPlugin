@@ -2,7 +2,10 @@ package daylightnebula.mmorpgplugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,16 +28,19 @@ public abstract class Champion {
     // events
     public abstract void onDealDamage(EntityDamageByEntityEvent event, GamePlayer gp);
     public abstract void onTakeDamage(EntityDamageByEntityEvent event, GamePlayer gp);
-    public abstract void onPlayerUseAbility(GamePlayer gp, int slot);
+    public abstract void onPlayerUseAbility(PlayerItemHeldEvent event, GamePlayer gp);
     public abstract void onPlayerUseWeapon(PlayerInteractEvent event, GamePlayer gp);
+    public abstract void onProjectileLaunch(ProjectileLaunchEvent event, GamePlayer gp);
+    public abstract void onProjectileHit(ProjectileHitEvent event, GamePlayer gp);
+    public abstract void update(GamePlayer gp);
 
     // STATIC
     public static Champion[] champions = new Champion[]{};
 
     private static Inventory inv;
-    public static Inventory getAdminInventory(GamePlayer gp) {
+    public static Inventory championMenu(GamePlayer gp) {
         if (inv == null) {
-            inv = Bukkit.createInventory(null, 27, "Admin Inventory");
+            inv = Bukkit.createInventory(null, 27, "Select A Champion");
 
             for (Champion champion : champions)
                 inv.addItem(champion.getChampIcon(gp));

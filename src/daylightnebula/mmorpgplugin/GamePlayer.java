@@ -1,5 +1,6 @@
 package daylightnebula.mmorpgplugin;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -27,5 +28,12 @@ public class GamePlayer {
     public static void addLivingEntity(LivingEntity le, Champion champ) {
         GamePlayer gp = new GamePlayer(le, champ);
         gamePlayers.put(le, gp);
+    }
+
+    public static GamePlayer getLivingEntity(Entity entity) {
+        if (entity == null) return null;
+        if (entity instanceof LivingEntity) return null;
+
+        return gamePlayers.get(entity);
     }
 }
