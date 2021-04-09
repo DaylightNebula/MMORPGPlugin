@@ -12,7 +12,6 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Essentials.plugin = this;
         eventListener = new EventListener(this);
         Bukkit.getPluginManager().registerEvents(eventListener, this);
     }

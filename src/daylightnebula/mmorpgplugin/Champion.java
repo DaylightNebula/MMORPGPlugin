@@ -1,5 +1,6 @@
 package daylightnebula.mmorpgplugin;
 
+import daylightnebula.mmorpgplugin.champions.HunterChampion;
 import org.bukkit.Bukkit;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -36,7 +37,9 @@ public abstract class Champion {
     public abstract void update(GamePlayer gp);
 
     // STATIC
-    public static Champion[] champions = new Champion[]{};
+    public static Champion[] champions = new Champion[]{
+            new HunterChampion(0)
+    };
 
     private static Inventory inv;
     public static Inventory championMenu(GamePlayer gp) {

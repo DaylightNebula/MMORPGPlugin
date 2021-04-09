@@ -3,6 +3,7 @@ package daylightnebula.mmorpgplugin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,24 @@ public class GamePlayer {
     public static void addLivingEntity(LivingEntity le, Champion champ) {
         GamePlayer gp = new GamePlayer(le, champ);
         gamePlayers.put(le, gp);
+    }
+
+    public static void setupInventory(GamePlayer gp) {
+        if (!(gp instanceof Player)) return;
+
+        Player player = (Player) gp.le;
+
+        ItemStack[] icons = gp.champion.getIcons(gp);
+        ItemStack[] freshArmor = gp.champion.getArmor(gp);
+        player.getInventory().setItem(0, icons[0]);
+        player.getInventory().setItem(1, icons[1]);
+        player.getInventory().setItem(2, icons[2]);
+        player.getInventory().setItem(3, icons[3]);
+        player.getEquipment().setHelmet(freshArmor[0]);
+        player.getEquipment().setChestplate(freshArmor[1]);
+        player.getEquipment().setLeggings(freshArmor[2]);
+        player.getEquipment().setBoots(freshArmor[3]);
+        player.getInventory().setItem(4, gp.champion.getWeapon(gp));
     }
 
     public static GamePlayer getLivingEntity(Entity entity) {

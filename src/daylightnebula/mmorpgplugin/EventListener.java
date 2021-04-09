@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -17,12 +18,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class EventListener implements Listener {
 
     public EventListener(Plugin plugin) {
-        Bukkit.getScheduler().runTaskTimer(plugin, new BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 Update();
             }
-        }, 0L, 1L);
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 
     @EventHandler
@@ -68,6 +69,14 @@ public class EventListener implements Listener {
 
         if (player != null)
             player.champion.onPlayerUseAbility(event, player);
+    }
+
+    @EventHandler
+    public void InventoryClick(InventoryClickEvent event) {
+        if (event.getView().getTitle().equals("Select A Champion")) {
+            GamePlayer.addLivingEntity(event.getWhoClicked(), Champion.champions[event.getSlot()]);
+            GamePlayer.setupInventory(GamePlayer.getLivingEntity(event.getWhoClicked()));
+        }
     }
 
     public void Update() {
