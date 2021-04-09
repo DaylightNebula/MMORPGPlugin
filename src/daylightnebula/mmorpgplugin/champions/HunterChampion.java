@@ -53,7 +53,7 @@ public class HunterChampion extends Champion {
     ItemStack[] armor;
     @Override
     public ItemStack[] getArmor(GamePlayer gp) {
-        for (armor == null) {
+        if (armor == null) {
             armor = new ItemStack[4];
             armor[0] = new ItemStack(Material.LEATHER_HELMET);
             armor[1] = new ItemStack(Material.LEATHER_CHESTPLATE);
@@ -62,6 +62,16 @@ public class HunterChampion extends Champion {
         }
 
         return armor;
+    }
+
+    @Override
+    public GamePlayer.AbilityContainer[] defaultContainers(GamePlayer gp) {
+        return new GamePlayer.AbilityContainer[]{
+                new GamePlayer.AbilityContainer(0, null),
+                new GamePlayer.AbilityContainer(0, null),
+                new GamePlayer.AbilityContainer(0, null),
+                new GamePlayer.AbilityContainer(0, null)
+        };
     }
 
     @Override

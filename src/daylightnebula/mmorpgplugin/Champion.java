@@ -24,6 +24,7 @@ public abstract class Champion {
     public abstract ItemStack getWeapon(GamePlayer gp);
     public abstract ItemStack[] getIcons(GamePlayer gp);
     public abstract ItemStack[] getArmor(GamePlayer gp);
+    public abstract GamePlayer.AbilityContainer[] defaultContainers(GamePlayer gp); // create new every time, do not want overlap
 
     // events
     public abstract void onDealDamage(EntityDamageByEntityEvent event, GamePlayer gp);
