@@ -1,6 +1,5 @@
 package daylightnebula.mmorpgplugin;
 
-import daylightnebula.mmorpgplugin.items.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,7 @@ public class Main extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (s.equals("getitems") && commandSender instanceof Player) {
-            ((Player) commandSender).openInventory(Item.getAdminInventory());
+            ((Player) commandSender).openInventory(Champion.getAdminInventory(GamePlayer.gamePlayers.get((Player) commandSender)));
         }
 
         return true;
