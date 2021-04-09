@@ -20,7 +20,7 @@ public class Main extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (s.equals("getitems") && commandSender instanceof Player) {
-            ((Player) commandSender).openInventory(Champion.getAdminInventory(GamePlayer.gamePlayers.get((Player) commandSender)));
+            ((Player) commandSender).openInventory(Champion.championMenu(GamePlayer.gamePlayers.get((Player) commandSender)));
         }
 
         return true;

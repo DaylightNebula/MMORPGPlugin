@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MMORPGPlugin">
+    <output-path>$PROJECT_DIR$/../../../MCServer/plugins</output-path>
+    <root id="archive" name="MMORPGPlugin.jar">
+      <element id="module-output" name="MMORPGPlugin" />
+      <element id="library" level="project" name="spigot-1.16.51" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../spigot-1.16.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
