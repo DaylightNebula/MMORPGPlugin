@@ -72,10 +72,12 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void InventoryClick(InventoryClickEvent event) {
+    public void onInventoryClick(InventoryClickEvent event) {
         if (event.getView().getTitle().equals("Select A Champion")) {
             GamePlayer.addLivingEntity(event.getWhoClicked(), Champion.champions[event.getSlot()]);
             GamePlayer.setupInventory(GamePlayer.getLivingEntity(event.getWhoClicked()));
+            event.setCancelled(true);
+            event.getWhoClicked().closeInventory();
         }
     }
 

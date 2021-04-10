@@ -47,7 +47,7 @@ public class GamePlayer {
     }
 
     public static void setupInventory(GamePlayer gp) {
-        if (!(gp instanceof Player)) return;
+        if (!(gp.le instanceof Player)) return;
 
         Player player = (Player) gp.le;
 
@@ -66,7 +66,7 @@ public class GamePlayer {
 
     public static GamePlayer getLivingEntity(Entity entity) {
         if (entity == null) return null;
-        if (entity instanceof LivingEntity) return null;
+        if (!(entity instanceof LivingEntity)) return null;
 
         return gamePlayers.get(entity);
     }
