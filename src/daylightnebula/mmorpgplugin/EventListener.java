@@ -27,7 +27,7 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void EntityDamageByEntity(EntityDamageByEntityEvent event) {
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         GamePlayer hit = GamePlayer.getLivingEntity(event.getEntity());
         GamePlayer damager = GamePlayer.getLivingEntity(event.getDamager());
 
@@ -40,7 +40,7 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void ProjectileLaunch(ProjectileLaunchEvent event) {
+    public void onProjectileLaunch(ProjectileLaunchEvent event) {
         GamePlayer launcher = GamePlayer.getLivingEntity((Entity) event.getEntity().getShooter());
 
         if (launcher != null)
@@ -48,7 +48,7 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void ProjectileHit(ProjectileHitEvent event) {
+    public void onProjectileHit(ProjectileHitEvent event) {
         GamePlayer launcher = GamePlayer.getLivingEntity((Entity) event.getEntity().getShooter());
 
         if (launcher != null)
@@ -56,7 +56,7 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void PlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
         GamePlayer player = GamePlayer.getLivingEntity(event.getPlayer());
 
         if (player != null)
@@ -64,11 +64,15 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void PlayerItemHeld(PlayerItemHeldEvent event) {
+    public void onPlayerItemHeld(PlayerItemHeldEvent event) {
         GamePlayer player = GamePlayer.getLivingEntity(event.getPlayer());
 
-        if (player != null)
+        if (event.getNewSlot() >= 4 && event.getNewSlot() <= 8)
+            event.setCancelled(true);
+        else if (player != null) {
             player.champion.onPlayerUseAbility(event, player);
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -78,6 +82,9 @@ public class EventListener implements Listener {
             GamePlayer.setupInventory(GamePlayer.getLivingEntity(event.getWhoClicked()));
             event.setCancelled(true);
             event.getWhoClicked().closeInventory();
+
+            if (event.isShiftClick())
+                event.getInventory().remove(GamePlayer.getLivingEntity(event.getWhoClicked()).champion.getChampIcon(GamePlayer.getLivingEntity(event.getWhoClicked())));
         }
     }
 

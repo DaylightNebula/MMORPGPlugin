@@ -3,7 +3,10 @@ package daylightnebula.mmorpgplugin.champions;
 import daylightnebula.mmorpgplugin.Champion;
 import daylightnebula.mmorpgplugin.GamePlayer;
 import daylightnebula.mmorpgplugin.ItemGenerator;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -67,7 +70,7 @@ public class HunterChampion extends Champion {
     @Override
     public GamePlayer.AbilityContainer[] defaultContainers(GamePlayer gp) {
         return new GamePlayer.AbilityContainer[]{
-                new GamePlayer.AbilityContainer(0, null),
+                new GamePlayer.AbilityContainer(0, 0),
                 new GamePlayer.AbilityContainer(0, null),
                 new GamePlayer.AbilityContainer(0, null),
                 new GamePlayer.AbilityContainer(0, null)
@@ -76,36 +79,41 @@ public class HunterChampion extends Champion {
 
     @Override
     public void onDealDamage(EntityDamageByEntityEvent event, GamePlayer gp) {
-
+        Bukkit.broadcastMessage("Player Deal Damage");
     }
 
     @Override
     public void onTakeDamage(EntityDamageByEntityEvent event, GamePlayer gp) {
-
+        Bukkit.broadcastMessage("Player Take Damage");
     }
 
     @Override
     public void onPlayerUseAbility(PlayerItemHeldEvent event, GamePlayer gp) {
-
+        Bukkit.broadcastMessage("Use Ability: " + event.getNewSlot());
     }
 
     @Override
     public void onPlayerUseWeapon(PlayerInteractEvent event, GamePlayer gp) {
-
+        if ((event.getAction() == Action.RIGHT_CLICK_AIR
+                || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+                && gp.abilities[0].cooldown == 0) {
+            gp.le.launchProjectile(Arrow.class);
+            gp.abilities[0].cooldown = 5;
+        }
     }
 
     @Override
     public void onProjectileLaunch(ProjectileLaunchEvent event, GamePlayer gp) {
-
+        Bukkit.broadcastMessage("Projectile launched!");
     }
 
     @Override
     public void onProjectileHit(ProjectileHitEvent event, GamePlayer gp) {
-
+        Bukkit.broadcastMessage("Projectile hit!");
     }
 
     @Override
     public void update(GamePlayer gp) {
-
+        if (gp.abilities[0].cooldown > 0) gp.abilities[0].cooldown--;
     }
 }

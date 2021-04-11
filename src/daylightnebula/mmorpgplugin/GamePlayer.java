@@ -43,6 +43,7 @@ public class GamePlayer {
 
     public static void addLivingEntity(LivingEntity le, Champion champ) {
         GamePlayer gp = new GamePlayer(le, champ);
+        gp.abilities = champ.defaultContainers(gp);
         gamePlayers.put(le, gp);
     }
 
@@ -62,6 +63,7 @@ public class GamePlayer {
         player.getEquipment().setLeggings(freshArmor[2]);
         player.getEquipment().setBoots(freshArmor[3]);
         player.getInventory().setItem(4, gp.champion.getWeapon(gp));
+        player.getInventory().setHeldItemSlot(4);
     }
 
     public static GamePlayer getLivingEntity(Entity entity) {

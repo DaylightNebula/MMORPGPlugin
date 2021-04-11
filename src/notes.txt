@@ -2,7 +2,7 @@ MVP stuff
 TODO: test champion
 
 ############ Champions ############
-Jhin/Hunter Inspired, Names: Rofu?, Thurne
+Jhin/Hunter Inspired, Names: Rofu?, Thurne?, Thorne
 Player uses a revolver with 4 rounds.  The forth shot before reloading deals extra damage.  Also has a sniper on his back.
 1: Reload: Reload revolver
 2: Smoke Grenade: Throw a grenade that explodes into a cloud of smoke.
